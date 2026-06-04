@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konversi Suhu Celcius ke Fahrenheit</title>
+    
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            display: grid;
+            gap: 25px;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #333;
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+        .input-group{
+            display: grid;
+            gap: 5px;
+        }
+
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        input[readonly] {
+            background-color: #e9ecef;
+            color: #495057;
+            font-weight: bold;
+            border-color: #ced4da;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+    </head>
+<body>
+
+    <div class="container">
+        <h1>Mengubah Suhu Celcius ke Fahrenheit</h1>
+        
+        <div class="input-group">
+            <label for="input-suhu">Masukkan suhu (&deg;C)</label>
+            <input type="number" id="input-suhu" step="any" placeholder="Contoh: 36.5">
+        </div>
+        
+        <button type="button" id="submit">Konversi Sekarang</button>
+
+        <div class="input-group">
+            <label for="result">Hasil suhu Fahrenheit (&deg;F)</label>
+            <input type="number" id="result" step="any" readonly placeholder="Hasil konversi">
+        </div>
+    </div>
+
+    <script>
+        function celciusToFarenheit(input){
+            return (input * 9/5) + 32
+        }
+
+        const input = document.getElementById('input-suhu')
+        const result = document.getElementById('result')
+        const konversi = document.getElementById('submit')
+
+        konversi.addEventListener('click', function () {
+            
+            const hasilKonversi = celciusToFarenheit(parseFloat(input.value))
+            
+            result.value = hasilKonversi.toFixed(2)
+        })
+    </script>
+</body>
+</html>
