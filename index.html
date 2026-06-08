@@ -46,7 +46,6 @@
 
 
         label {
-            display: block;
             font-size: 14px;
             font-weight: 600;
             color: #555;
@@ -93,40 +92,101 @@
         button:active {
             transform: scale(0.98);
         }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        th, td {
+            border: 1px solid #ced4da;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #e4d1d1;
+            color: #333;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
     </style>
     </head>
 <body>
 
-    <div class="container">
+    <form class="container" id="form-suhu">
         <h1>Mengubah Suhu Celcius ke Fahrenheit</h1>
         
         <div class="input-group">
             <label for="input-suhu">Masukkan suhu (&deg;C)</label>
-            <input type="number" id="input-suhu" step="any" placeholder="Contoh: 36.5">
+            <input type="number" id="input-suhu" step="any" placeholder="Contoh: 36.5" name="inputSuhu">
         </div>
         
-        <button type="button" id="submit">Konversi Sekarang</button>
+        <button type="Submit" id="submit">Konversi Sekarang</button>
 
         <div class="input-group">
-            <label for="result">Hasil suhu Fahrenheit (&deg;F)</label>
-            <input type="number" id="result" step="any" readonly placeholder="Hasil konversi">
+            <label>Riwayat Hasil Konversi</label>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Celcius (&deg;C)</th>
+                            <th>Fahrenheit (&deg;F)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabel-hasil">
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </form>
 
     <script>
         function celciusToFarenheit(input){
             return (input * 9/5) + 32
         }
 
-        const input = document.getElementById('input-suhu')
-        const result = document.getElementById('result')
-        const konversi = document.getElementById('submit')
+        const formSuhu = document.getElementById('form-suhu')
+        const result = document.getElementById('tabel-hasil')
+        let no = 1
 
-        konversi.addEventListener('click', function () {
-            
-            const hasilKonversi = celciusToFarenheit(parseFloat(input.value))
-            
-            result.value = hasilKonversi.toFixed(2)
+        formSuhu.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const form = new FormData(formSuhu)
+            if (form.get('inputSuhu') === ""){
+                alert('suhu harus diisi')
+                return
+            }
+            const hasilKonversi = celciusToFarenheit(parseFloat(form.get('inputSuhu')))
+
+            const barisTable = document.createElement('tr')
+            const kolomNo = document.createElement('td')
+            kolomNo.innerText = no++
+            const kolomInputSuhu = document.createElement('td')
+            kolomInputSuhu.innerText = form.get('inputSuhu')
+            const kolomResult = document.createElement('td')
+            kolomResult.innerText = hasilKonversi.toFixed(2)
+
+            barisTable.append(kolomNo)
+            barisTable.append(kolomInputSuhu)
+            barisTable.append(kolomResult)
+
+            result.append(barisTable)
+
+            formSuhu.reset()
         })
     </script>
 </body>
